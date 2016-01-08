@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0DF32076-1E59-4D83-86BA-73450B9CA33B}</ProjectGuid>
+    <ProjectGuid>{A25246BB-6820-477C-B1BB-F7EA63CF80CC}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>oselo</RootNamespace>
@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,14 +44,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bord.cs" />
+    <Compile Include="Board.cs" />
+    <Compile Include="BoardState.cs" />
+    <Compile Include="CellPoint.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Math.cs" />
+    <Compile Include="Cell.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rule.cs" />
     <Compile Include="Stone.cs" />
+    <Compile Include="StoneColor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

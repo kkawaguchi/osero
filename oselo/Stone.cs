@@ -8,5 +8,7 @@ namespace oselo
 {
     class Stone
     {
+        public string color { get; private set; }
+
     }
 }

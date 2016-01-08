@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace oselo
 {
@@ -10,6 +9,12 @@ namespace oselo
     {
         static void Main(string[] args)
         {
+            //ゲームを作成
+            Game game = new Game();
+            //ゲームスタート
+            game.Start();
+
+
         }
     }
 }
