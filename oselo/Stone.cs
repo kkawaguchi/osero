@@ -8,7 +8,11 @@ namespace oselo
 {
     class Stone
     {
-        public string color { get; private set; }
+        public StoneColor color { get; private set; }
 
+        public Stone(StoneColor color)
+        {
+            this.color = color;
+        }
     }
 }

@@ -16,11 +16,12 @@ namespace oselo
         private Player(StoneColor color)
         {
             this.Color = color;
+
         }
 
-        public CellPoint PutStone(int x,int y)
+        public CellPoint PutStone(int x, int y)
         {
-            return false;
+            return new CellPoint(x,y);
         }
 
 

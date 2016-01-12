@@ -9,9 +9,10 @@ namespace oselo
     class Game
     {
         public List<BoardState> story = new List<BoardState>();
-        public int Turn;
+        public int Turn = 0;
         private Player player1;
         private Player player2;
+        public Board board{get; private set;} 
 
         public Game()
         {
@@ -24,9 +25,15 @@ namespace oselo
 
         }
 
-        public Board CreateBord()
+        public void CreateBord()
         {
-            return new Board();
+            this.board =  new Board();
+        }
+
+        public void SetInitialPosition()
+        {
+
+
         }
 
     }

@@ -17,19 +17,24 @@ namespace oselo
             {
                 for (int j = 1; j <= 8 ; j++ )
                 {
-                    cells.Add(CreateCell(i, j));
+                    cells.Add(CreateCell(CreateCellPoint(i,j)));
                 } 
             }
         }
 
-        private Cell CreateCell(int x, int y)
+        private Cell CreateCell(CellPoint point)
         {
-            return new Cell(x,y);
+            return new Cell(point);
+        }
+
+        private CellPoint CreateCellPoint(int x,int y)
+        {
+            return new CellPoint(x,y);
         }
 
         private Cell GetCell(int x, int y)
         {
-            var cell = this.cells.Where(p => p.X == x && p.Y == y).Select(p => p);
+            var cell = this.cells.Where(p => p.Point.X == x && p.Point.Y == y).Select(p => p);
             return cell.First<Cell>();
         }
     }
