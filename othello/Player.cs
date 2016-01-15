@@ -21,8 +21,8 @@ namespace oselo
 
         public CellPoint SelectPoint()
         {
-           
 
+            return null;
         }
     }
 }

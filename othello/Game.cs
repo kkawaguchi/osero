@@ -13,11 +13,14 @@ namespace oselo
         private Player player1;
         private Player player2;
         public Board board = new Board();
+        public Player nextPlayer;
+
 
         public Game()
         {
             this.player1 = Player.BlackPlayer;
             this.player2 = Player.WhitePlayer;
+            this.nextPlayer = Player.BlackPlayer;
         }
 
         public void Start()
@@ -41,12 +44,9 @@ namespace oselo
             board.CellChange(point, stone);
         }
 
-        //オセロする
-        private void PlayTurn(Player player)
+        public Player NextPalyer()
         {
 
-            Turn++;
         }
-
     }
 }

@@ -55,12 +55,6 @@
     <Compile Include="PlayerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\oselo\oselo.csproj">
-      <Project>{A25246BB-6820-477C-B1BB-F7EA63CF80CC}</Project>
-      <Name>oselo</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

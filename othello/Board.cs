@@ -24,7 +24,7 @@ namespace oselo
 
         private Cell GetCell(CellPoint point)
         {
-            var cell = this.cells.Where(p => p.Equals(point)).Select(p => p);
+            var cell = this.cells.Where(c => c.Point.Equals(point));
             return cell.First<Cell>();
         }
 

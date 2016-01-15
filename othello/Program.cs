@@ -16,7 +16,7 @@ namespace oselo
             game.SetInitialPosition();
 
             //
-            while (game.Turn != 65)
+            while (true)
             {
                 Console.WriteLine(ReadSelectPoint()[0]);
 
@@ -39,7 +39,7 @@ namespace oselo
                 nyuryoku = Console.ReadLine();
                 selectPoint = nyuryoku.Split(',');
 
-                if (!CheckPoint(nyuryoku, selectPoint, point))
+                if (CheckPoint(nyuryoku, selectPoint, point))
                 {
                     return point;
                 }
