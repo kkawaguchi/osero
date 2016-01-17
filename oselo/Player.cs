@@ -21,8 +21,13 @@ namespace oselo
 
         public CellPoint SelectPoint()
         {
-           
 
+            return null;
+        }
+
+        private Stone CreateStone()
+        {
+            return new Stone(Color);
         }
     }
 }

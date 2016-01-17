@@ -8,7 +8,7 @@ namespace oselo
 {
     class Board
     {
-        private List<Cell> cells = new List<Cell>();
+        public List<Cell> cells = new List<Cell>();
 
         public Board()
         {   
@@ -17,14 +17,14 @@ namespace oselo
             {
                 for (int j = 1; j <= 8 ; j++ )
                 {
-                    cells.Add(new Cell(i,j));
+                    cells.Add(new Cell(i,j,this));
                 } 
             }
         }
 
-        private Cell GetCell(CellPoint point)
+        public Cell GetCell(CellPoint point)
         {
-            var cell = this.cells.Where(p => p.Equals(point)).Select(p => p);
+            var cell = this.cells.Where(c => c.Point.Equals(point));
             return cell.First<Cell>();
         }
 

@@ -8,45 +8,60 @@ namespace oselo
 {
     class Game
     {
-        public List<BoardState> story = new List<BoardState>();
         public int Turn = 0;
-        private Player player1;
-        private Player player2;
+        private Player player1 = Player.BlackPlayer;
+        private Player player2 = Player.WhitePlayer;
         public Board board = new Board();
+        public Player nextPlayer = Player.BlackPlayer;
+        public Rule rule;
+
 
         public Game()
         {
-            this.player1 = Player.BlackPlayer;
-            this.player2 = Player.WhitePlayer;
+            this.rule = new Rule(this.board);
         }
 
         public void Start()
         {
             SetInitialPosition();
-
         }
 
-        
         public void SetInitialPosition()
         {
-            PutStone(new CellPoint(4, 4), new Stone(StoneColor.Black));
-            PutStone(new CellPoint(5, 5), new Stone(StoneColor.Black));
-            PutStone(new CellPoint(4, 5), new Stone(StoneColor.White));
-            PutStone(new CellPoint(5, 4), new Stone(StoneColor.White));
+            board.CellChange(new CellPoint(4, 4), new Stone(player1.Color));
+            board.CellChange(new CellPoint(5, 5), new Stone(player1.Color));
+            board.CellChange(new CellPoint(4, 5), new Stone(player2.Color));
+            board.CellChange(new CellPoint(5, 4), new Stone(player2.Color));
         }
 
-        public void PutStone(CellPoint point,Stone stone)
+        public bool PutStone(CellPoint point,Player player)
         {
             //TODO:ルールでおけるがどうか調べる
-            board.CellChange(point, stone);
+            return rule.CheckPutStone(this.board.GetCell(point), player);
+            //board.CellChange(point, new Stone(player.Color));
+            //ChangeNextPlayer();
         }
 
-        //オセロする
-        private void PlayTurn(Player player)
+        public void NextPalyer(Player player)
         {
-
-            Turn++;
+            foreach(Cell cell in this.board.cells)
+            {
+                if(rule.CheckPut(cell,player))
+                {
+                    ChangeNextPlayer();
+                    break;
+                }
+            }
         }
 
+        public CellPoint GetPoint(int[] point)
+        {
+            return new CellPoint(point[0],point[1]);
+        }
+
+        private void ChangeNextPlayer()
+        {
+            this.nextPlayer = this.nextPlayer.Color == StoneColor.Black ? this.player2 : this.player1;
+        }
     }
 }

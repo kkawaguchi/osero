@@ -51,5 +51,10 @@ namespace oselo
         {
             return nyuryoku.Split(',').Length == 2 && int.TryParse(selectPoint[0], out point[0]) && int.TryParse(selectPoint[1], out point[1]);
         }
+
+        private static void ShowBorad()
+        {
+
+        }
     }
 }

@@ -26,16 +26,16 @@ namespace oseloTest
         [TestMethod()]
         public void GameConstructorTest()
         {
-            Game target = new Game();
+            //Game target = new Game();
             Assert.Inconclusive("TODO: ターゲットを確認するためのコードを実装してください");
         }
 
         public void CreateBordTest()
         {
-            Game target = new Game();
-            target.CreateBord();
+            //Game target = new Game();
+            //target.CreateBord();
             
-            Assert.IsNotNull(target.CurrentBoardState);
+            //Assert.IsNotNull(target.CurrentBoardState);
         }
     }
 }
