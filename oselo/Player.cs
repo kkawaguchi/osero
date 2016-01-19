@@ -19,15 +19,9 @@ namespace oselo
 
         }
 
-        public CellPoint SelectPoint()
+        public Player OpsitPlayer()
         {
-
-            return null;
-        }
-
-        private Stone CreateStone()
-        {
-            return new Stone(Color);
+            return this.Color == StoneColor.Black ? WhitePlayer : BlackPlayer;
         }
     }
 }

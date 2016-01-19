@@ -33,5 +33,18 @@ namespace oselo
             GetCell(point).Stone = stone == null ? null : stone;
         }
 
+        public int CountStone(StoneColor color)
+        {
+            int StoneCnt = 0;
+            foreach (Cell cell in this.cells)
+            {
+                if (cell.Stone != null)
+                {
+                    if (cell.Stone.Color == color) StoneCnt++; 
+                }
+            }
+            return StoneCnt;
+        }
+
     }
 }

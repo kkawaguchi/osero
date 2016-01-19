@@ -12,24 +12,20 @@ namespace oselo
             //ゲームを作成
             Game game = new Game();
             
-            //初期配置
-            game.SetInitialPosition();
-
             //
-            while (true)
+            while (!game.HasEnd)
             {
                 Console.WriteLine("");
-                ShowNextPayer(game.nextPlayer);
-                ShowBorad(game.board);
-                if (!game.PutStone(game.GetPoint(ReadSelectPoint()), game.nextPlayer))
+                ShowNextPayer(game.NextPlayer);
+                ShowBorad(game.Board);
+                int[] points = new int[2];
+                points = ReadSelectPoint();
+                if (!game.PutStone(points[0], points[1], game.NextPlayer))
                 {
                     Console.WriteLine("その場所にはおけません");
                 }
-                else
-                {
-                    game.NextPalyer(game.nextPlayer);
-                }
             }
+              GameEnd(game);
         }
 
         private static int[] ReadSelectPoint()
@@ -48,6 +44,11 @@ namespace oselo
                 {
                     return point;
                 }
+
+                if (CheckPoint2(nyuryoku, selectPoint, point))
+                {
+                    return point;
+                }
                 Console.WriteLine("入力が誤りです。");
             }
         }
@@ -63,6 +64,19 @@ namespace oselo
                 return false;
             }
             
+        }
+
+        private static bool CheckPoint2(string nyuryoku, string[] selectPoint, int[] point)
+        {
+            if (nyuryoku.Length == 2 && int.TryParse(ConvertA(nyuryoku[0].ToString()), out point[0]) && int.TryParse(nyuryoku[1].ToString(), out point[1]))
+            {
+                return point[0] >= 1 && point[0] <= 8 && point[1] >= 1 && point[1] <= 8;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         private static void ShowBorad(Board board)
@@ -105,6 +119,39 @@ namespace oselo
             else
             {
                 Console.WriteLine("白のターンです");
+            }
+        }
+
+        private static void GameEnd(Game game)
+        {
+            ShowBorad(game.Board);
+            Console.WriteLine("終了です");
+            if (game.Winner() == Player.BlackPlayer)
+            {
+                Console.WriteLine("黒の勝ちです");
+            }
+            else
+            {
+                Console.WriteLine("白の勝ちです");
+            }
+            Console.WriteLine("Enterで終了");
+            string end = Console.ReadLine();
+            
+        }
+
+        private static string ConvertA(string A)
+        {
+            switch (A.ToLower())
+            {
+                case "a": return "1";
+                case "b": return "2";
+                case "c": return "3";
+                case "d": return "4";
+                case "e": return "5";
+                case "f": return "6";
+                case "g": return "7";
+                case "h": return "8";
+                default:return A;
             }
         }
     }

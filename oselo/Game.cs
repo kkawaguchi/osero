@@ -11,57 +11,94 @@ namespace oselo
         public int Turn = 0;
         private Player player1 = Player.BlackPlayer;
         private Player player2 = Player.WhitePlayer;
-        public Board board = new Board();
-        public Player nextPlayer = Player.BlackPlayer;
-        public Rule rule;
+        private Rule rule;
+        public Board Board { get; private set; }
+        public Player NextPlayer{ get; private set; } 
+        public bool HasEnd { get; private set; }
 
 
         public Game()
         {
-            this.rule = new Rule(this.board);
-        }
-
-        public void Start()
-        {
+            this.Board= new Board();
+            this.rule = new Rule(this.Board);
             SetInitialPosition();
+            this.NextPlayer = player1;
         }
 
-        public void SetInitialPosition()
+        private void SetInitialPosition()
         {
-            board.CellChange(new CellPoint(4, 4), new Stone(player1.Color));
-            board.CellChange(new CellPoint(5, 5), new Stone(player1.Color));
-            board.CellChange(new CellPoint(4, 5), new Stone(player2.Color));
-            board.CellChange(new CellPoint(5, 4), new Stone(player2.Color));
+            Board.CellChange(new CellPoint(4, 4), new Stone(player1.Color));
+            Board.CellChange(new CellPoint(5, 5), new Stone(player1.Color));
+            Board.CellChange(new CellPoint(4, 5), new Stone(player2.Color));
+            Board.CellChange(new CellPoint(5, 4), new Stone(player2.Color));
         }
 
         public bool PutStone(CellPoint point,Player player)
         {
-            //TODO:ルールでおけるがどうか調べる
-            return rule.CheckPutStone(this.board.GetCell(point), player);
-            //board.CellChange(point, new Stone(player.Color));
-            //ChangeNextPlayer();
+            if (rule.CheckAllDirection(this.Board.GetCell(point), player))
+            {
+                rule.ChangeAllStone(this.Board.GetCell(point), player);
+                MoveToNextPalyer();
+                return true;
+            }
+            return false;
         }
 
-        public void NextPalyer(Player player)
+        public bool PutStone(int x,int y, Player player)
         {
-            foreach(Cell cell in this.board.cells)
+            return PutStone(new CellPoint(x,y),player);
+        }
+
+        private void MoveToNextPalyer()
+        {
+            if (NextPlayerCanPutStone(this.NextPlayer.OpsitPlayer()))
             {
-                if(rule.CheckPut(cell,player))
-                {
-                    ChangeNextPlayer();
-                    break;
-                }
+                ChangeNextPlayer();
+                return;
+            }
+
+            if (!NextPlayerCanPutStone(this.NextPlayer))
+            {
+                this.HasEnd = true;
             }
         }
 
-        public CellPoint GetPoint(int[] point)
+        private bool NextPlayerCanPutStone(Player player)
         {
-            return new CellPoint(point[0],point[1]);
+
+            foreach (Cell cell in this.Board.cells)
+            {
+                if (rule.CheckAllDirection(cell, player))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void ChangeNextPlayer()
         {
-            this.nextPlayer = this.nextPlayer.Color == StoneColor.Black ? this.player2 : this.player1;
+            this.NextPlayer = NextPlayer.OpsitPlayer();
+        }
+
+        public Player Winner()
+        {
+            int BlackCnt=this.Board.CountStone(StoneColor.Black);
+            int WhiteCnt = this.Board.CountStone(StoneColor.White);
+
+            if (BlackCnt == WhiteCnt)
+            {
+                return null;
+            }
+            else if (BlackCnt > WhiteCnt)
+            {
+                return player1;
+            }
+            else
+            {
+                return player2;
+            }
+
         }
     }
 }

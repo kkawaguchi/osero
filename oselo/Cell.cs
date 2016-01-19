@@ -24,6 +24,21 @@ namespace oselo
         {
         }
 
+        public Cell GetNextCell(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Ue: return GetUE();
+                case Direction.Shita: return GetSHITA();
+                case Direction.Migi: return GetMIGI();
+                case Direction.Hidari: return GetHIDARI();
+                case Direction.MigiUe: return GetMIGIUE();
+                case Direction.MigiShita: return GetMIGISHITA();
+                case Direction.HidariUe: return GetHIDARIUE();
+                default :return GetHIDARISHITA();
+            }       
+        }
+
         public Cell GetUE()
         {
             if(this.Point.Y == 1)
@@ -119,5 +134,7 @@ namespace oselo
                 return this.GetSHITA().GetHIDARI();
             }
         }
+
+        public bool HasStone { get { return this.Stone != null; } }
     }
 }
