@@ -89,7 +89,7 @@ namespace oselo
                 {
                     if(board.GetCell(new CellPoint(j, i)).Stone == null)
                     {
-                        Console.Write("□");
+                        Console.Write("・");
                     }
                     else
                     {
