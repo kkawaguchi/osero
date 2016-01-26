@@ -20,24 +20,24 @@ namespace oselo
         public Game()
         {
             this.Board= new Board();
-            this.rule = new Rule(this.Board);
+            this.rule = new Rule();
             SetInitialPosition();
             this.NextPlayer = player1;
         }
 
         private void SetInitialPosition()
         {
-            Board.CellChange(new CellPoint(4, 4), new Stone(player1.Color));
-            Board.CellChange(new CellPoint(5, 5), new Stone(player1.Color));
-            Board.CellChange(new CellPoint(4, 5), new Stone(player2.Color));
-            Board.CellChange(new CellPoint(5, 4), new Stone(player2.Color));
+            Board.GetCell(new CellPoint(4, 4)).SetStone(new Stone(player1.Color));
+            Board.GetCell(new CellPoint(5, 5)).SetStone(new Stone(player1.Color));
+            Board.GetCell(new CellPoint(4, 5)).SetStone(new Stone(player2.Color));
+            Board.GetCell(new CellPoint(5, 4)).SetStone(new Stone(player2.Color));
         }
 
         public bool PutStone(CellPoint point,Player player)
         {
-            if (rule.CheckAllDirection(this.Board.GetCell(point), player))
+            if (rule.CanPutStoneToCell(new Stone(player.Color), this.Board.GetCell(point)))
             {
-                rule.ChangeAllStone(this.Board.GetCell(point), player);
+                rule.PutStoneToCell(new Stone(player.Color),this.Board.GetCell(point));
                 MoveToNextPalyer();
                 return true;
             }
@@ -68,7 +68,7 @@ namespace oselo
 
             foreach (Cell cell in this.Board.cells)
             {
-                if (rule.CheckAllDirection(cell, player))
+                if (rule.CanPutStoneToCell(new Stone(player.Color), cell))
                 {
                     return true;
                 }

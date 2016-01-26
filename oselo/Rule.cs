@@ -9,38 +9,34 @@ namespace oselo
 {
     class Rule
     {
-        public Board Board { get;private set; }
         private static Direction[] directions = (Direction[])Enum.GetValues(typeof(Direction)); 
-        public Rule(Board board)
+        public Rule()
         {
-            this.Board = board;
         }
 
-        public void ChangeAllStone(Cell cell, Player player)
+        public void PutStoneToCell(Stone stone, Cell cell)
         {
-            if (cell.Stone != null) return;
-
-            this.Board.CellChange(cell.Point, new Stone(player.Color));
+            cell.SetStone(stone);
 
             for (int i = 0; i < 8; i++)
             {
-                if (CheckOneDirection(cell, player, directions[i]))
+                if (CheckOneDirection(cell, stone, directions[i]))
                     //チェックOKなら色を変える
-                    ChangeStone(cell, player, directions[i]);
+                    ChangeCell(cell, stone, directions[i]);
             }
         }
 
-        public bool CheckAllDirection(Cell cell, Player player)
+        public bool CanPutStoneToCell(Stone stone, Cell cell)
         {
             if (cell.Stone != null) return false;
             for (int i = 0; i < 8;i++ )
             {
-                if (CheckOneDirection(cell, player, directions[i])) return true;
+                if (CheckOneDirection(cell, stone, directions[i])) return true;
             }
             return false;
         }
 
-        private bool CheckOneDirection(Cell cell, Player player,Direction direction)
+        private bool CheckOneDirection(Cell cell, Stone stone, Direction direction)
         {
             Cell next = cell.GetNextCell(direction);
 
@@ -48,13 +44,13 @@ namespace oselo
             if (next == null || !next.HasStone) return false;
 
             //1つ上がプレイヤーと同じ色の場合は置けない
-            if (player.Color == next.Stone.Color) return false;
+            if (stone.Color == next.Stone.Color) return false;
 
             //1つ上に石がある間続ける
             while ((next = next.GetNextCell(direction)) != null && next.HasStone)
             {
                 //自分と同じ色なら置ける
-                if( player.Color == next.Stone.Color)
+                if (stone.Color == next.Stone.Color)
                 {
                     return true;
                 }
@@ -62,16 +58,16 @@ namespace oselo
             return false;
         }
         
-        private void ChangeStone(Cell cell, Player player,Direction direction)
+        private void ChangeCell(Cell cell, Stone stone, Direction direction)
         {
             Cell next = cell;
             //1つ上に石がある間続ける
             while ((next = next.GetNextCell(direction)) != null && next.HasStone)
             {
                 //自分と違う色なら色を変える
-                if (player.Color != next.Stone.Color)
+                if (stone.Color != next.Stone.Color)
                 {
-                    this.Board.CellChange(next.Point, new Stone(player.Color));
+                    next.Change();
                 }
                 else return;
             }

@@ -11,7 +11,7 @@ namespace oselo
         public CellPoint Point { get; private set; }
         public Board Board { get; private set; }
 
-        public Stone Stone { get; set; }
+        public Stone Stone { get; private set; }
 
         public Cell(CellPoint point,Board board)
         {
@@ -136,5 +136,20 @@ namespace oselo
         }
 
         public bool HasStone { get { return this.Stone != null; } }
+
+     
+        public void Change()
+        {
+            if (this.Stone == null)
+                throw new InvalidOperationException();
+            this.Stone.ChangeColor();
+        }
+
+        public void SetStone(Stone stone)
+        {
+            if (this.Stone != null) return;
+            this.Stone = stone;
+        }
+           
     }
 }

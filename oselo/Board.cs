@@ -28,11 +28,6 @@ namespace oselo
             return cell.First<Cell>();
         }
 
-        public void CellChange(CellPoint point, Stone stone)
-        {
-            GetCell(point).Stone = stone == null ? null : stone;
-        }
-
         public int CountStone(StoneColor color)
         {
             int StoneCnt = 0;
