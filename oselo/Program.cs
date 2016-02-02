@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace oselo
 {
     class Program
@@ -11,16 +12,18 @@ namespace oselo
         {
             //ゲームを作成
             Game game = new Game();
-            
-            //
+            IPlayer player1 = new AIPlayer1(StoneColor.Black);
+            IPlayer player2 = new AIPlayer1(StoneColor.White);
+           
             while (!game.HasEnd)
             {
                 Console.WriteLine("");
-                ShowNextPayer(game.NextPlayer);
                 ShowBorad(game.Board);
+                Console.WriteLine("");
+                ShowNextPayer(player1, player2, game);
                 int[] points = new int[2];
-                points = ReadSelectPoint();
-                if (!game.PutStone(points[0], points[1], game.NextPlayer))
+                points = NextPlayer(player1, player2, game).SelectPoint(game.Board);
+                if (!game.PutStone(points[0], points[1], game.NextTurnColor))
                 {
                     Console.WriteLine("その場所にはおけません");
                 }
@@ -28,57 +31,7 @@ namespace oselo
               GameEnd(game);
         }
 
-        private static int[] ReadSelectPoint()
-        {
-            string nyuryoku = "";
-            string[] selectPoint = new string[2];
-            int[] point = new int[2];
-
-            while (true)
-            {
-                Console.Write("置く場所を指定してください(x,y)");
-                nyuryoku = Console.ReadLine();
-                selectPoint = nyuryoku.Split(',');
-
-                if (CheckPoint(nyuryoku, selectPoint, point))
-                {
-                    return point;
-                }
-
-                if (CheckPoint2(nyuryoku, selectPoint, point))
-                {
-                    return point;
-                }
-                Console.WriteLine("入力が誤りです。");
-            }
-        }
-
-        private static bool CheckPoint(string nyuryoku, string[] selectPoint, int[] point)
-        {
-            if(nyuryoku.Split(',').Length == 2 && int.TryParse(selectPoint[0], out point[0]) && int.TryParse(selectPoint[1], out point[1]))
-            {
-                return point[0] >= 1 && point[0] <= 8 && point[1] >= 1 && point[1] <= 8;
-            }
-            else
-            {
-                return false;
-            }
-            
-        }
-
-        private static bool CheckPoint2(string nyuryoku, string[] selectPoint, int[] point)
-        {
-            if (nyuryoku.Length == 2 && int.TryParse(ConvertA(nyuryoku[0].ToString()), out point[0]) && int.TryParse(nyuryoku[1].ToString(), out point[1]))
-            {
-                return point[0] >= 1 && point[0] <= 8 && point[1] >= 1 && point[1] <= 8;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
+       
         private static void ShowBorad(Board board)
         {
             Console.WriteLine("　ＡＢＣＤＥＦＧＨ");
@@ -110,49 +63,41 @@ namespace oselo
             }
         }
 
-        private static void ShowNextPayer(Player player)
+        private static void ShowNextPayer(IPlayer player1, IPlayer player2, Game game)
         {
-            if(player.Color == StoneColor.Black)
-            {
-                Console.WriteLine("黒のターンです");
-            }
-            else
-            {
-                Console.WriteLine("白のターンです");
-            }
+
+            Console.WriteLine("{0}のターンです({1})", NextPlayer(player1, player2, game).Name, game.NextTurnColor);
+            
         }
 
         private static void GameEnd(Game game)
         {
+            Console.WriteLine();
             ShowBorad(game.Board);
             Console.WriteLine("終了です");
-            if (game.Winner() == Player.BlackPlayer)
+            if (game.Winner() == StoneColor.Black)
             {
                 Console.WriteLine("黒の勝ちです");
             }
-            else
+            else if (game.Winner() == StoneColor.White)
             {
                 Console.WriteLine("白の勝ちです");
+            }
+            else
+            {
+                Console.WriteLine("引き分けです");
             }
             Console.WriteLine("Enterで終了");
             string end = Console.ReadLine();
             
         }
 
-        private static string ConvertA(string A)
+       
+        private static IPlayer NextPlayer(IPlayer player1,IPlayer player2,Game game)
         {
-            switch (A.ToLower())
-            {
-                case "a": return "1";
-                case "b": return "2";
-                case "c": return "3";
-                case "d": return "4";
-                case "e": return "5";
-                case "f": return "6";
-                case "g": return "7";
-                case "h": return "8";
-                default:return A;
-            }
+            return game.NextTurnColor == player1.Color ? player1 : player2;
         }
+
+
     }
 }

@@ -8,6 +8,7 @@ namespace oselo
     enum StoneColor
     {
         Black,
-        White
+        White,
+        Yellow
     }
 }

@@ -61,12 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIPlayer1.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardState.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="CellPoint.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IPlayer.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,12 +101,6 @@
 </ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AI\AI.csproj">
-      <Project>{0517EEBA-BF0D-42D0-B631-CDECAC7EF24F}</Project>
-      <Name>AI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

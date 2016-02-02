@@ -8,12 +8,9 @@ namespace oselo
 {
     class Game
     {
-        public int Turn = 0;
-        private Player player1 = Player.BlackPlayer;
-        private Player player2 = Player.WhitePlayer;
         private Rule rule;
         public Board Board { get; private set; }
-        public Player NextPlayer{ get; private set; } 
+        public StoneColor NextTurnColor{ get; private set; } 
         public bool HasEnd { get; private set; }
 
 
@@ -22,53 +19,53 @@ namespace oselo
             this.Board= new Board();
             this.rule = new Rule();
             SetInitialPosition();
-            this.NextPlayer = player1;
+            this.NextTurnColor = StoneColor.Black;
         }
 
         private void SetInitialPosition()
         {
-            Board.GetCell(new CellPoint(4, 4)).SetStone(new Stone(player1.Color));
-            Board.GetCell(new CellPoint(5, 5)).SetStone(new Stone(player1.Color));
-            Board.GetCell(new CellPoint(4, 5)).SetStone(new Stone(player2.Color));
-            Board.GetCell(new CellPoint(5, 4)).SetStone(new Stone(player2.Color));
+            Board.GetCell(new CellPoint(4, 4)).SetStone(new Stone(StoneColor.Black));
+            Board.GetCell(new CellPoint(5, 5)).SetStone(new Stone(StoneColor.Black));
+            Board.GetCell(new CellPoint(4, 5)).SetStone(new Stone(StoneColor.White));
+            Board.GetCell(new CellPoint(5, 4)).SetStone(new Stone(StoneColor.White));
         }
 
-        public bool PutStone(CellPoint point,Player player)
+        public bool PutStone(CellPoint point,StoneColor color)
         {
-            if (rule.CanPutStoneToCell(new Stone(player.Color), this.Board.GetCell(point)))
+            if (rule.CanPutStoneToCell(new Stone(color), this.Board.GetCell(point)))
             {
-                rule.PutStoneToCell(new Stone(player.Color),this.Board.GetCell(point));
+                rule.PutStoneToCell(new Stone(color), this.Board.GetCell(point));
                 MoveToNextPalyer();
                 return true;
             }
             return false;
         }
 
-        public bool PutStone(int x,int y, Player player)
+        public bool PutStone(int x, int y, StoneColor color)
         {
-            return PutStone(new CellPoint(x,y),player);
+            return PutStone(new CellPoint(x,y),color);
         }
 
         private void MoveToNextPalyer()
         {
-            if (NextPlayerCanPutStone(this.NextPlayer.OpsitPlayer()))
+            if (NextPlayerCanPutStone(ChangeColor(this.NextTurnColor)))
             {
-                ChangeNextPlayer();
+                ChangeNextTurnColor();
                 return;
             }
 
-            if (!NextPlayerCanPutStone(this.NextPlayer))
+            if (!NextPlayerCanPutStone(this.NextTurnColor))
             {
                 this.HasEnd = true;
             }
         }
 
-        private bool NextPlayerCanPutStone(Player player)
+        private bool NextPlayerCanPutStone(StoneColor color)
         {
 
             foreach (Cell cell in this.Board.cells)
             {
-                if (rule.CanPutStoneToCell(new Stone(player.Color), cell))
+                if (rule.CanPutStoneToCell(new Stone(color), cell))
                 {
                     return true;
                 }
@@ -76,29 +73,34 @@ namespace oselo
             return false;
         }
 
-        private void ChangeNextPlayer()
+        private void ChangeNextTurnColor()
         {
-            this.NextPlayer = NextPlayer.OpsitPlayer();
+            this.NextTurnColor = ChangeColor(this.NextTurnColor);
         }
 
-        public Player Winner()
+        public StoneColor Winner()
         {
             int BlackCnt=this.Board.CountStone(StoneColor.Black);
             int WhiteCnt = this.Board.CountStone(StoneColor.White);
 
             if (BlackCnt == WhiteCnt)
             {
-                return null;
+                return StoneColor.Yellow;
             }
             else if (BlackCnt > WhiteCnt)
             {
-                return player1;
+                return StoneColor.Black;
             }
             else
             {
-                return player2;
+                return StoneColor.White;
             }
 
+        }
+
+        private StoneColor ChangeColor(StoneColor color)
+        {
+            return color == StoneColor.Black ? StoneColor.White : StoneColor.Black;
         }
     }
 }

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AI
+namespace oselo
 {
     interface IPlayer
     {
-        String Name{get;}
-        void SelectPoint();
+        String Name { get; }
+        StoneColor Color { get; }
+        int[] SelectPoint(Board bood);
     }
 }

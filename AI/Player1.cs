@@ -5,10 +5,10 @@ using System.Text;
 
 namespace AI
 {
-    class 太郎:IPlayer
+    public class Player1
     {
         public String Name { get; private set; }
-        public 太郎()
+        public Player1()
         {
             this.Name = "太郎";
         }
