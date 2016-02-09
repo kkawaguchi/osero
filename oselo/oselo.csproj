@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIPlayer1.cs" />
+    <Compile Include="AIPlayer2.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="BoardState.cs" />
     <Compile Include="Cell.cs" />

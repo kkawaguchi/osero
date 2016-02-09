@@ -12,7 +12,7 @@ namespace oselo
         {
             //ゲームを作成
             Game game = new Game();
-            IPlayer player1 = new AIPlayer1(StoneColor.Black);
+            IPlayer player1 = new AIPlayer2(StoneColor.Black);
             IPlayer player2 = new AIPlayer1(StoneColor.White);
            
             while (!game.HasEnd)

@@ -14,6 +14,7 @@ namespace oselo
         public Player(StoneColor color)
         {
             this.Color = color;
+            Console.WriteLine("名前を入力してください");
             this.Name = Console.ReadLine();
         }
 
